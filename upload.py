@@ -21,23 +21,15 @@ def get_oss_connect():
         calling_format=boto.s3.connection.OrdinaryCallingFormat())
     return s3_conn
 
-
-def isBucketExist(conn, bucketname):
-    print('isBucketExist---------name=%s' % bucketname)
-    isExist = conn.lookup(bucketname)
-    if isExist is None:
-        print('bucket=', bucketname, 'is not exist')
-        conn.create_bucket(BUCKET)
-        return False
-    return True
-
-
-# 上传小文件
+# 在当前桶下分块上传文件
 def upload_big_file_to_oss(file):
+    """
+
+    :param file: 文件路径
+    :return: 上传成功返回代码
+    """
     s3_conn = get_oss_connect()
-    isBucketExist(s3_conn, BUCKET)
     b = s3_conn.get_bucket(BUCKET)
-    # setBucketPolicyJson(b, BUCKET)
     source_path = file
     source_size = os.stat(source_path).st_size
     mp = b.initiate_multipart_upload(os.path.basename(source_path), policy="public-read")
@@ -57,7 +49,7 @@ def upload_big_file_to_oss(file):
     return result
 
 
-# 分块上传大文件
+# 在当前桶下新建桶分块上传文件
 def upload_big_file_by_key(key, file):
     s3_conn = get_oss_connect()
     b = s3_conn.get_bucket(BUCKET)

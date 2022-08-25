@@ -29,6 +29,13 @@ def get_oss_connect():
 
 # 遍历当前bucket下的文件对象
 def listobjects(conn, bucketname, prefix=''):
+    """
+
+    :param conn:
+    :param bucketname: bucket桶名称
+    :param prefix: 文件名称
+    :return:
+    """
     print('listobjects---------name=%s, prefix=%s' % (bucketname, prefix))
     bucket = conn.get_bucket(bucketname)
     obj = []

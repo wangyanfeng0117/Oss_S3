@@ -46,7 +46,6 @@ def listobjects(conn, bucketname, prefix=''):
     return obj
 
 
-##下载文件对象
 def downloadObjectToFile(conn, bucketname, objname, dstFile):
     print('downloadObjectToFile---- bucket=%s, object=%s, file=%s' % (bucketname, objname, dstFile))
     try:
